@@ -13,17 +13,45 @@ angular.module('myApp.wood',
 		});
 	}])
 
-	.controller('WoodCtrl', ['$scope', function ($scope) {
-		$scope.materials =
-			[
-				{label: 'дуб', value: 1},
-				{label: 'бук', value: 2},
-				{label: 'ясень', value: 3}
-			];
-		$scope.colors = [
-			{label: 'светло-коричневый', value: 1},
-			{label: 'тёмно-коричневый', value: 2}
-		]
+	.filter('materialValue', function(WoodMaterials) {
+		var woodMaterials = WoodMaterials;
+
+		return function (materialId) {
+			if(!materialId) {
+				throw 'Exception material'
+			}
+
+			return woodMaterials.filter(function(e) {
+				return e.id === materialId
+			})[0]['rusName']
+		}
+	})
+
+	.filter('colorValue', function (WoodColors) {
+		var woodColors = WoodColors;
+
+		return function (colorId) {
+			if (!colorId) {
+				throw 'Exception color'
+			}
+
+			return woodColors.filter(function (e) {
+				return e.id === colorId
+			})[0]['rusName']
+		};
+	})
+
+	.value('WoodColors', [{id: 1, rusName: 'светло-коричневый'}, {id: 2, rusName: 'тёмно-коричневый'}])
+	.value('WoodMaterials', [{id:1, rusName: 'дуб'}, {id:2, rusName: 'бук'}, {id: 3, rusName: 'ясень'}])
+
+	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', function ($scope, WoodColors, WoodMaterials) {
+		var materials = $scope.materials = WoodMaterials.map(function(e) {
+			return {label: e['rusName'], value: e.id}
+		})
+
+		var colors = $scope.colors = WoodColors.map(function (e) {
+			return {label: e['rusName'], value: e.id}
+		})
 
 		$scope.goodsWoods = [
 			{
@@ -40,7 +68,7 @@ angular.module('myApp.wood',
 			}, {
 				image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/A_deciduous_beech_forest_in_Slovenia.jpg',
 				material: 2,
-				color: 3,
+				color: 2,
 				price: 90
 			}
 		]
