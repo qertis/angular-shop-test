@@ -1,7 +1,5 @@
 <div>
-    <em>Search</em>
-
-    <form>
+    <form class="card color-main">
         <label for="mat">Material:</label>
         <select id="mat"
                 ng-model="materialSelected"
@@ -16,8 +14,13 @@
         </select>
         <br/>
 
-        <label for="prc">Price: {{price}}</label>
-        <input type="range" min="0" max="100" ng-model="price" id="prc"/>
+        <label for="minPrc">Min Price: {{fromPrice}}</label>
+        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="fromPrice" id="minPrc"/>
 
+        <br/>
+        <label for="maxPrc">Max Price: {{toPrice}}</label>
+        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="toPrice" id="maxPrc"/>
+
+        <input type="submit" value="Search"/>
     </form>
 </div>

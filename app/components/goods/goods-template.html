@@ -1,3 +1,8 @@
 <div>
-    <em>Woods</em>
+    <div ng-repeat="gw in goodsWoods" class="inline card color-main">
+        <img alt="" class="smallImage" ng-src="{{gw.image}}"/>
+        <p>Material: {{gw.material}}</p>
+        <p>Color: {{gw.color}}</p>
+        <p>Price: {{gw.price}}</p>
+    </div>
 </div>
