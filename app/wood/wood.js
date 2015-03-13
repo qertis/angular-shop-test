@@ -10,7 +10,11 @@ angular.module('myApp.wood',
 		$routeProvider.when('/wood', {
 			templateUrl: 'wood/wood.html',
 			controller: 'WoodCtrl'
-		});
+		})
+			.when('/wood/:id', {
+				templateUrl: 'wood_selected.html',
+				controller: 'WoodSelectedCtrl'
+			})
 	}])
 
 	.filter('searchGoodsWoods', function (AllWoods) {
@@ -19,9 +23,9 @@ angular.module('myApp.wood',
 		return function (searchGoodsWoods) {
 			return allWoods.filter(function (e) {
 				return (
-					e.material === searchGoodsWoods.materialSelected.value &&
-					e.color === searchGoodsWoods.colorSelected.value &&
-					e.price >= searchGoodsWoods.fromPrice && e.price <= searchGoodsWoods.toPrice
+				e.material === searchGoodsWoods.materialSelected.value &&
+				e.color === searchGoodsWoods.colorSelected.value &&
+				e.price >= searchGoodsWoods.fromPrice && e.price <= searchGoodsWoods.toPrice
 				);
 			});
 		}
@@ -58,17 +62,20 @@ angular.module('myApp.wood',
 	.value('WoodColors', [{id: 1, rusName: 'светло-коричневый'}, {id: 2, rusName: 'тёмно-коричневый'}])
 	.value('WoodMaterials', [{id: 1, rusName: 'дуб'}, {id: 2, rusName: 'бук'}, {id: 3, rusName: 'ясень'}])
 	.value('AllWoods', [{
+		id: 1,
 		image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Fraxinus_excelsior_tree.jpg/398px-Fraxinus_excelsior_tree.jpg',
 		material: 3,
 		color: 1,
 		price: 100
 	},
 		{
+			id: 2,
 			image: 'http://www.soweren.ru/userfiles/posadka-duba.jpg',
 			material: 1,
 			color: 1,
 			price: 80
 		}, {
+			id: 3,
 			image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/A_deciduous_beech_forest_in_Slovenia.jpg',
 			material: 2,
 			color: 2,
@@ -76,8 +83,12 @@ angular.module('myApp.wood',
 		}])
 
 
-	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', 'AllWoods', '$filter',
-		function ($scope, WoodColors, WoodMaterials, AllWoods, $filter) {
+	.controller('WoodSelectedCtrl', ['$scope', function ($scope) {
+
+	}])
+
+	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', 'AllWoods', '$filter', '$location',
+		function ($scope, WoodColors, WoodMaterials, AllWoods, $filter, $location) {
 
 			$scope.wood = {}
 
@@ -90,13 +101,13 @@ angular.module('myApp.wood',
 			})
 
 			var goodsWoods = $scope.goodsWoods = AllWoods;
-			
+
 			$scope.wood.materialSelected = $scope.materials[0]
 			$scope.wood.colorSelected = $scope.colors[0]
 			$scope.wood.fromPrice = 0;
 			$scope.wood.toPrice = 1000;
 
-			$scope.onSearch = function (wood) {
+			$scope.onSearch = function onSearch(wood) {
 				$scope.goodsWoods = $filter('searchGoodsWoods')(wood);
 			}
 
@@ -105,6 +116,10 @@ angular.module('myApp.wood',
 					$scope.wood.fromPrice = $scope.wood.fromPrice - 1;
 					$scope.wood.toPrice = $scope.wood.fromPrice;
 				}
+			}
+
+			$scope.showWood = function showWood(id) {
+				$location.path('/wood/' + id);
 			}
 
 		}]);
