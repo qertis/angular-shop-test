@@ -13,15 +13,29 @@ angular.module('myApp.wood',
 		});
 	}])
 
-	.filter('materialValue', function(WoodMaterials) {
+	.filter('searchGoodsWoods', function (AllWoods) {
+		var allWoods = AllWoods;
+
+		return function (searchGoodsWoods) {
+			return allWoods.filter(function (e) {
+				return (
+					e.material === searchGoodsWoods.materialSelected.value &&
+					e.color === searchGoodsWoods.colorSelected.value &&
+					e.price >= searchGoodsWoods.fromPrice && e.price <= searchGoodsWoods.toPrice
+				);
+			});
+		}
+	})
+
+	.filter('materialValue', function (WoodMaterials) {
 		var woodMaterials = WoodMaterials;
 
 		return function (materialId) {
-			if(!materialId) {
+			if (!materialId) {
 				throw 'Exception material'
 			}
 
-			return woodMaterials.filter(function(e) {
+			return woodMaterials.filter(function (e) {
 				return e.id === materialId
 			})[0]['rusName']
 		}
@@ -42,48 +56,55 @@ angular.module('myApp.wood',
 	})
 
 	.value('WoodColors', [{id: 1, rusName: 'светло-коричневый'}, {id: 2, rusName: 'тёмно-коричневый'}])
-	.value('WoodMaterials', [{id:1, rusName: 'дуб'}, {id:2, rusName: 'бук'}, {id: 3, rusName: 'ясень'}])
+	.value('WoodMaterials', [{id: 1, rusName: 'дуб'}, {id: 2, rusName: 'бук'}, {id: 3, rusName: 'ясень'}])
+	.value('AllWoods', [{
+		image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Fraxinus_excelsior_tree.jpg/398px-Fraxinus_excelsior_tree.jpg',
+		material: 3,
+		color: 1,
+		price: 100
+	},
+		{
+			image: 'http://www.soweren.ru/userfiles/posadka-duba.jpg',
+			material: 1,
+			color: 1,
+			price: 80
+		}, {
+			image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/A_deciduous_beech_forest_in_Slovenia.jpg',
+			material: 2,
+			color: 2,
+			price: 90
+		}])
 
-	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', function ($scope, WoodColors, WoodMaterials) {
-		var materials = $scope.materials = WoodMaterials.map(function(e) {
-			return {label: e['rusName'], value: e.id}
-		})
 
-		var colors = $scope.colors = WoodColors.map(function (e) {
-			return {label: e['rusName'], value: e.id}
-		})
+	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', 'AllWoods', '$filter',
+		function ($scope, WoodColors, WoodMaterials, AllWoods, $filter) {
 
-		$scope.goodsWoods = [
-			{
-				image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Fraxinus_excelsior_tree.jpg/398px-Fraxinus_excelsior_tree.jpg',
-				material: 3,
-				color: 1,
-				price: 100
-			},
-			{
-				image: 'http://www.soweren.ru/userfiles/posadka-duba.jpg',
-				material: 1,
-				color: 1,
-				price: 80
-			}, {
-				image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/A_deciduous_beech_forest_in_Slovenia.jpg',
-				material: 2,
-				color: 2,
-				price: 90
+			$scope.wood = {}
+
+			var materials = $scope.materials = WoodMaterials.map(function (e) {
+				return {label: e['rusName'], value: e.id}
+			})
+
+			var colors = $scope.colors = WoodColors.map(function (e) {
+				return {label: e['rusName'], value: e.id}
+			})
+
+			var goodsWoods = $scope.goodsWoods = AllWoods;
+			
+			$scope.wood.materialSelected = $scope.materials[0]
+			$scope.wood.colorSelected = $scope.colors[0]
+			$scope.wood.fromPrice = 0;
+			$scope.wood.toPrice = 1000;
+
+			$scope.onSearch = function (wood) {
+				$scope.goodsWoods = $filter('searchGoodsWoods')(wood);
 			}
-		]
 
-		$scope.materialSelected = $scope.materials[0]
-		$scope.colorSelected = $scope.colors[0]
-		$scope.fromPrice = 0;
-		$scope.toPrice = 1000;
-
-		$scope.changePrice = function changePrice() {
-			if ($scope.fromPrice >= $scope.toPrice) {
-
-				$scope.toPrice = $scope.fromPrice;
+			$scope.changePrice = function changePrice() {
+				if ($scope.wood.fromPrice >= $scope.wood.toPrice && $scope.wood.fromPrice > 1) {
+					$scope.wood.fromPrice = $scope.wood.fromPrice - 1;
+					$scope.wood.toPrice = $scope.wood.fromPrice;
+				}
 			}
-		}
 
-
-	}]);
+		}]);

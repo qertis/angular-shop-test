@@ -1,25 +1,25 @@
 <div>
-    <form class="card color-main">
+    <form class="card color-main" ng-submit="onSearch(wood)">
         <label for="mat">Material:</label>
         <select id="mat"
-                ng-model="materialSelected"
+                ng-model="wood.materialSelected"
                 ng-options="opt as opt.label for opt in materials">
         </select>
         <br/>
 
         <label for="col">Color:</label>
         <select id="col"
-                ng-model="colorSelected"
+                ng-model="wood.colorSelected"
                 ng-options="opt as opt.label for opt in colors">
         </select>
         <br/>
 
-        <label for="minPrc">Min Price: {{fromPrice}}</label>
-        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="fromPrice" id="minPrc"/>
+        <label for="minPrc">Min Price: {{wood.fromPrice}}</label>
+        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="wood.fromPrice" id="minPrc"/>
 
         <br/>
-        <label for="maxPrc">Max Price: {{toPrice}}</label>
-        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="toPrice" id="maxPrc"/>
+        <label for="maxPrc">Max Price: {{wood.toPrice}}</label>
+        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="wood.toPrice" id="maxPrc"/>
 
         <input type="submit" value="Search"/>
     </form>
