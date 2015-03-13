@@ -8,8 +8,8 @@ describe('myApp.wood module', function() {
 
     it('should ....', inject(function($controller) {
       //spec body
-      var view1Ctrl = $controller('View1Ctrl');
-      expect(view1Ctrl).toBeDefined();
+      var WoodCtrl = $controller('WoodCtrl');
+      expect(WoodCtrl).toBeDefined();
     }));
 
   });

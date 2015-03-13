@@ -1,3 +1,23 @@
 <div>
     <em>Search</em>
+
+    <form>
+        <label for="mat">Material:</label>
+        <select id="mat"
+                ng-model="materialSelected"
+                ng-options="opt as opt.label for opt in materials">
+        </select>
+        <br/>
+
+        <label for="col">Color:</label>
+        <select id="col"
+                ng-model="colorSelected"
+                ng-options="opt as opt.label for opt in colors">
+        </select>
+        <br/>
+
+        <label for="prc">Price: {{price}}</label>
+        <input type="range" min="0" max="100" ng-model="price" id="prc"/>
+
+    </form>
 </div>
