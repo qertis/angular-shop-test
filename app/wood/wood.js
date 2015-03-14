@@ -115,6 +115,8 @@ angular.module('myApp.wood',
 					$scope.wood.fromPrice = 0;
 					$scope.wood.toPrice = 1000;
 
+					$scope.wood.loaded = true;
+
 					$interval.cancel(getWoodsIntv);
 				}
 

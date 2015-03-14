@@ -1,12 +1,12 @@
 <div class="row">
     <div class="large-9 push-0 columns">
-        <h3>Selected
+        <h3 ng-if="gw.material">Selected
             <small ng-bind="gw.material | materialValue"></small>
         </h3>
 
-        <p>Color: <span ng-bind="gw.color | colorValue"></span></p>
+        <p ng-if="gw.color">Color: <span ng-bind="gw.color | colorValue"></span></p>
 
-        <p>Price: <span ng-bind="gw.price"></span></p>
+        <p ng-if="gw.price">Price: <span ng-bind="gw.price"></span></p>
 
         <img alt="" ng-src="{{gw.image}}"/>
     </div>
