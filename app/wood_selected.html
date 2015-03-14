@@ -1,12 +1,13 @@
-<div>
-    Selected
+<div class="row">
+    <div class="large-9 push-0 columns">
+        <h3>Selected
+            <small ng-bind="gw.material | materialValue"></small>
+        </h3>
 
-    <img alt="" class="smallImage" ng-src="{{image}}"/>
+        <p>Color: <span ng-bind="gw.color | colorValue"></span></p>
 
-    <p>Material: {{material }}</p>
+        <p>Price: <span ng-bind="gw.price"></span></p>
 
-    <p>Color: {{color}}</p>
-
-    <p>Price: {{price}}</p>
-
+        <img alt="" ng-src="{{gw.image}}"/>
+    </div>
 </div>

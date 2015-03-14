@@ -1,26 +1,40 @@
-<div>
-    <form class="card color-main" ng-submit="onSearch(wood)">
-        <label for="mat">Material:</label>
-        <select id="mat"
-                ng-model="wood.materialSelected"
-                ng-options="opt as opt.label for opt in materials">
-        </select>
-        <br/>
+<form class="card" ng-submit="onSearch(wood)">
 
-        <label for="col">Color:</label>
-        <select id="col"
-                ng-model="wood.colorSelected"
-                ng-options="opt as opt.label for opt in colors">
-        </select>
-        <br/>
+    <label for="mat">Material:</label>
+    <select id="mat"
+            ng-model="wood.materialSelected"
+            ng-options="opt as opt.label for opt in materials">
+    </select>
 
-        <label for="minPrc">Min Price: {{wood.fromPrice}}</label>
-        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="wood.fromPrice" id="minPrc"/>
+    <br/>
 
-        <br/>
-        <label for="maxPrc">Max Price: {{wood.toPrice}}</label>
-        <input type="range" min="0" max="1000" ng-change="changePrice()" ng-model="wood.toPrice" id="maxPrc"/>
+    <label for="col">Color:</label>
+    <select id="col"
+            ng-model="wood.colorSelected"
+            ng-options="opt as opt.label for opt in colors">
+    </select>colorValue
 
-        <input type="submit" value="Search"/>
-    </form>
-</div>
+    <br/>
+
+    <label for="minPrc">Min Price: {{wood.fromPrice}}</label>
+    <input type="range" min="0" max="1000"
+           ng-change="changePrice()"
+           value="{{wood.fromPrice}}"
+           ng-model="wood.fromPrice"
+           id="minPrc"/>
+
+    <br/>
+
+    <label for="maxPrc">Max Price: {{wood.toPrice}}</label>
+    <input type="range" min="0" max="1000"
+           ng-change="changePrice()"
+           value="{{wood.toPrice}}"
+           ng-model="wood.toPrice"
+           id="maxPrc"/>
+
+    <br/>
+
+    <input type="reset" class="button" value="Reset" ng-click="reset()">
+    <input type="submit" class="button" value="Search"/>
+
+</form>
