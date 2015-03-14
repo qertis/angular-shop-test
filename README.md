@@ -266,7 +266,6 @@ CloudBees have provided a CI/deployment setup:
 If you run this, you will get a cloned version of this repo to start working on in a private git repo,
 along with a CI service (in Jenkins) hosted that will run unit and end to end tests in both Firefox and Chrome.
 
-
 ## Contact
 
 For more information on AngularJS please check out http://angularjs.org/
@@ -280,3 +279,7 @@ For more information on AngularJS please check out http://angularjs.org/
 [karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+
+## Demo
+
+http://goo.gl/MfV8I9
