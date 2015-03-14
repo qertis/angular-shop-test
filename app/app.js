@@ -7,7 +7,8 @@ angular.module('myApp',
 	])
 
 	.config(function ($urlRouterProvider) {
-		$urlRouterProvider.otherwise('/wood');
-	})
 
+		$urlRouterProvider.otherwise('/wood');
+
+	})
 ;

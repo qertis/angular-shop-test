@@ -61,4 +61,5 @@ angular.module('myApp.wood')
 				$scope.goodsWoods = WoodService.all
 			}
 
-		}]);
+		}])
+;

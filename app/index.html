@@ -13,6 +13,7 @@
     <title>My AngularJS App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Denis Baskovsky">
 
     <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
     <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
@@ -34,23 +35,37 @@
 
 <div ui-view></div>
 
-<script src="bower_components/jquery/dist/jquery.js"></script>
-<script src="bower_components/foundation/js/foundation.js"></script>
+<footer class="row">
+    <div class="large-12 columns">
+        <hr/>
+        <div class="row">
+
+            <div class="large-6 columns">
+                <p>© Copyright no one at all. Go to town.</p>
+            </div>
+
+        </div>
+    </div>
+</footer>
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/foundation/js/foundation.min.js"></script>
 <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/scriptjs/dist/script.js"></script>
-<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script src="wood/wood.js"></script>
-<script src="wood/wood_filters.js"></script>
-<script src="wood/wood_services.js"></script>
-<script src="wood/wood_controllers.js"></script>
+<script src="bower_components/firebase/firebase.js"></script>
+<script src="bower_components/angular/angular.min.js"></script>
+<script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="bower_components/scriptjs/dist/script.min.js"></script>
+
+<script src="views/wood.js"></script>
+<script src="views/wood_filters.js"></script>
+<script src="views/wood_services.js"></script>
+<script src="views/wood_controllers.js"></script>
+
 <script src="components/goods/goods.js"></script>
 <script src="components/goods/goods-directive.js"></script>
 <script src="components/search/search.js"></script>
 <script src="components/search/search-directive.js"></script>
 <script src="app.js"></script>
-<script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>
-<script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
-
 </body>
 </html>

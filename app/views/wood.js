@@ -15,13 +15,14 @@ angular.module('myApp.wood',
 		$stateProvider
 			.state('wood', {
 				url: "/wood",
-				templateUrl: 'wood/wood.html',
+				templateUrl: 'views/wood.html',
 				controller: 'WoodCtrl'
 			})
 			.state('/wood/:id', {
 				url: "/wood/:id",
-				templateUrl: 'wood/wood_selected.html',
+				templateUrl: 'views/wood_selected.html',
 				controller: 'WoodSelectedCtrl'
 			})
 
 	})
+;
