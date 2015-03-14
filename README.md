@@ -1,14 +1,12 @@
-# angular-seed — the seed for AngularJS apps
+# angular-shop-test
 
-This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
-You can use it to quickly bootstrap your angular webapp projects and dev environment for these
-projects.
+Краткая спека: предметная область, где есть продаваемые предметы с 3 параметрами - к примеру, древесина, у которой есть 3 параметра:
+материал (дуб, бук, ясень), цвет (светло-коричневый, тёмно-коричневый) и цена.
 
-The seed contains a sample AngularJS application and is preconfigured to install the Angular
-framework and a bunch of development and testing tools for instant web development gratification.
-
-The seed app doesn't do much, just shows how to wire two controllers and views together.
-
+Нужно написать SPA на angular.js, где выводятся все товары, есть возможность фильтровать эти товары
+(параметры - материал и цвет в виде дропдаун-листов, цена - параметр интервальный, в виде слайдера).
+Так же должен работать роутинг (angular-ui-route).
+Плюсом будет покрытие функционала тестами.
 
 ## Getting Started
 
@@ -27,17 +25,9 @@ its package manager (npm) installed.  You can get them from [http://nodejs.org/]
 Clone the angular-seed repository using [git][git]:
 
 ```
-git clone https://github.com/angular/angular-seed.git
-cd angular-seed
+git clone https://github.com/qertis/angular-shop-test.git
+cd angular-shop-test
 ```
-
-If you just want to start a new project without the angular-seed commit history then you can do:
-
-```bash
-git clone --depth=1 https://github.com/angular/angular-seed.git <your-project-name>
-```
-
-The `depth=1` tells git to only pull down one commit worth of historical data.
 
 ### Install Dependencies
 
@@ -73,8 +63,6 @@ npm start
 ```
 
 Now browse to the app at `http://localhost:8000/app/index.html`.
-
-
 
 ## Directory Layout
 
