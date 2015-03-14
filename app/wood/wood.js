@@ -2,26 +2,29 @@
 
 angular.module('myApp.wood',
 	[
-		'ngRoute',
+		'ui.router',
 		'myApp.goods',
-		'myApp.search'
+		'myApp.search',
+		'firebase'
 	])
-	.config(['$routeProvider', function ($routeProvider) {
-		$routeProvider.when('/wood', {
-			templateUrl: 'wood/wood.html',
-			controller: 'WoodCtrl'
-		})
-			.when('/wood/:id', {
+	.config(function($stateProvider){
+		$stateProvider
+			.state('wood', {
+				url: "/wood",
+				templateUrl: 'wood/wood.html',
+				controller: 'WoodCtrl'
+			})
+			.state('/wood/:id', {
+				url: "/wood/:id",
 				templateUrl: 'wood_selected.html',
 				controller: 'WoodSelectedCtrl'
 			})
-	}])
 
-	.filter('searchGoodsWoods', function (AllWoods) {
-		var allWoods = AllWoods;
+	})
 
+	.filter('searchGoodsWoods', function (WoodService) {
 		return function (searchGoodsWoods) {
-			return allWoods.filter(function (e) {
+			return WoodService.all.filter(function (e) {
 				return (
 				e.material === searchGoodsWoods.materialSelected.value &&
 				e.color === searchGoodsWoods.colorSelected.value &&
@@ -31,81 +34,91 @@ angular.module('myApp.wood',
 		}
 	})
 
-	.filter('materialValue', function (WoodMaterials) {
-		var woodMaterials = WoodMaterials;
-
+	.filter('materialValue', function (WoodService) {
 		return function (materialId) {
 			if (!materialId) {
 				throw 'Exception material'
 			}
 
-			return woodMaterials.filter(function (e) {
+			return WoodService.materials.filter(function (e) {
 				return e.id === materialId
 			})[0]['rusName']
 		}
 	})
 
-	.filter('colorValue', function (WoodColors) {
-		var woodColors = WoodColors;
-
+	.filter('colorValue', function (WoodService) {
 		return function (colorId) {
 			if (!colorId) {
 				throw 'Exception color'
 			}
 
-			return woodColors.filter(function (e) {
+			return WoodService.colors.filter(function (e) {
 				return e.id === colorId
 			})[0]['rusName']
 		};
 	})
 
-	.value('WoodColors', [{id: 1, rusName: 'светло-коричневый'}, {id: 2, rusName: 'тёмно-коричневый'}])
-	.value('WoodMaterials', [{id: 1, rusName: 'дуб'}, {id: 2, rusName: 'бук'}, {id: 3, rusName: 'ясень'}])
-	.value('AllWoods', [{
-		id: 1,
-		image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Fraxinus_excelsior_tree.jpg/398px-Fraxinus_excelsior_tree.jpg',
-		material: 3,
-		color: 1,
-		price: 100
-	},
-		{
-			id: 2,
-			image: 'http://www.soweren.ru/userfiles/posadka-duba.jpg',
-			material: 1,
-			color: 1,
-			price: 80
-		}, {
-			id: 3,
-			image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/A_deciduous_beech_forest_in_Slovenia.jpg',
-			material: 2,
-			color: 2,
-			price: 90
+	.service('WoodService', function ($firebaseObject) {
+		var self = this;
+		self.colors = self.materials = self.all = [];
+
+		var ref = new Firebase("https://supertests.firebaseio.com/");
+		var sync = $firebaseObject(ref);
+
+		sync.$loaded(
+			function (data) {
+				var shopTest = null,
+					wood = null;
+
+				if (shopTest = data['shop-test']) {
+					if (wood = shopTest.wood) {
+						self.colors = wood.colors;
+						self.materials = wood.materials;
+						self.all = wood.all;
+						self.completed = 1;
+					}
+				}
+			}
+		);
+	})
+
+	.controller('WoodSelectedCtrl', ['$scope', 'WoodService', '$stateParams', '$location',
+		function ($scope, WoodService, $stateParams, $location) {
+			if (!WoodService.completed) {
+				alert("Getting data error");
+
+				return $location.path('/wood');
+			}
+
+			$scope.gw = WoodService.current;
 		}])
 
+	.controller('WoodCtrl', ['$scope', '$filter', '$location', '$interval', 'WoodService',
+		function ($scope, $filter, $location, $interval, WoodService) {
 
-	.controller('WoodSelectedCtrl', ['$scope', function ($scope) {
+			$scope.wood = {};
 
-	}])
+			var getWoodsIntv = $interval(function () {
+				if (WoodService.completed) {
+					$scope.materials = WoodService.materials.map(function (e) {
+						return {label: e['rusName'], value: e.id}
+					})
 
-	.controller('WoodCtrl', ['$scope', 'WoodColors', 'WoodMaterials', 'AllWoods', '$filter', '$location',
-		function ($scope, WoodColors, WoodMaterials, AllWoods, $filter, $location) {
+					$scope.colors = WoodService.colors.map(function (e) {
+						return {label: e['rusName'], value: e.id}
+					})
 
-			$scope.wood = {}
+					$scope.goodsWoods = WoodService.all;
 
-			var materials = $scope.materials = WoodMaterials.map(function (e) {
-				return {label: e['rusName'], value: e.id}
-			})
+					$scope.wood.materialSelected = $scope.materials[0]
+					$scope.wood.colorSelected = $scope.colors[0]
+					$scope.wood.fromPrice = 0;
+					$scope.wood.toPrice = 1000;
 
-			var colors = $scope.colors = WoodColors.map(function (e) {
-				return {label: e['rusName'], value: e.id}
-			})
+					$interval.cancel(getWoodsIntv);
+				}
 
-			var goodsWoods = $scope.goodsWoods = AllWoods;
-
-			$scope.wood.materialSelected = $scope.materials[0]
-			$scope.wood.colorSelected = $scope.colors[0]
-			$scope.wood.fromPrice = 0;
-			$scope.wood.toPrice = 1000;
+			}, 150)
 
 			$scope.onSearch = function onSearch(wood) {
 				$scope.goodsWoods = $filter('searchGoodsWoods')(wood);
@@ -118,8 +131,15 @@ angular.module('myApp.wood',
 				}
 			}
 
-			$scope.showWood = function showWood(id) {
-				$location.path('/wood/' + id);
+			$scope.showWood = function showWood(gw) {
+				WoodService.current = gw;
+
+				$location.path('/wood/' + gw.id);
+
+			}
+
+			$scope.reset = function reset() {
+				$scope.goodsWoods = WoodService.all
 			}
 
 		}]);
