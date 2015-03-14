@@ -16,7 +16,9 @@
     "protractor": "^1.1.1",
     "shelljs": "^0.2.6",
     "foundation": "latest",
-    "angularfire": "latest"
+    "angularfire": "latest",
+    "angular-ui-router": "latest",
+    "scriptjs": "latest"
   },
   "scripts": {
     "postinstall": "bower install",
