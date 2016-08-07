@@ -1,0 +1,54 @@
+{
+  "shop-test" : {
+    "wood" : {
+      "all" : [ {
+        "color" : 1,
+        "id" : 1,
+        "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Esche_gemeine_Holz.JPG/300px-Esche_gemeine_Holz.JPG",
+        "material" : 3,
+        "price" : 500
+      }, {
+        "color" : 1,
+        "id" : 2,
+        "image" : "http://www.stairs-sp.ru/images/oak.jpg",
+        "material" : 1,
+        "price" : 200
+      }, {
+        "color" : 1,
+        "id" : 3,
+        "image" : "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Buche_Holz_1.jpg/300px-Buche_Holz_1.jpg",
+        "material" : 2,
+        "price" : 320
+      }, {
+        "color" : 2,
+        "id" : 4,
+        "image" : "http://mebel-gem.ru/netcat_files/184/184/dub__tangentsial_nyy_srez.jpg",
+        "material" : 1,
+        "price" : 620
+      }, {
+        "color" : 1,
+        "id" : 5,
+        "image" : "http://kuznica-msk.ru/images/stories/derevlestnica/buk.jpg",
+        "material" : 2,
+        "price" : 780
+      } ],
+      "colors" : [ {
+        "id" : 1,
+        "rusName" : "светло-коричневый"
+      }, {
+        "id" : 2,
+        "rusName" : "тёмно-коричневый"
+      } ],
+      "materials" : [ {
+        "id" : 1,
+        "rusName" : "дуб"
+      }, {
+        "id" : 2,
+        "rusName" : "бук"
+      }, {
+        "id" : 3,
+        "rusName" : "ясень"
+      } ]
+    }
+  }
+}
